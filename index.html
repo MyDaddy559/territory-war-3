@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Territory War 3</title>
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+  <style>
+    #ruffle-player { width: 100%; height: 600px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>Territory War 3</h1>
+  <div id="ruffle-player"></div>
+  <script>
+    window.addEventListener("load", () => {
+      const ruffle = window.RufflePlayer.newest().createPlayer();
+      const playerDiv = document.getElementById("ruffle-player");
+      playerDiv.appendChild(ruffle);
+      ruffle.loadAndRun("Territory War 3.swf");  // Path to your SWF file
+    });
+  </script>
+</body>
+</html>
