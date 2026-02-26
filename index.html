@@ -6,20 +6,21 @@
   <title>Territory War 3</title>
   <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #111; color: #eee; text-align: center; }
-    h1 { margin: 20px; }
-    #ruffle-player { width: 100%; max-width: 900px; height: 600px; margin: 0 auto; border: 2px solid #444; background: #000; }
-    #error { color: #ff4444; margin: 20px; }
+    body { margin: 0; padding: 20px; font-family: Arial, sans-serif; background: #111; color: #eee; text-align: center; }
+    h1 { margin-bottom: 20px; }
+    #player-container { width: 100%; max-width: 900px; height: 600px; margin: 0 auto; border: 2px solid #444; background: #000; }
+    #status { margin: 20px; font-size: 1.2em; color: #ffcc00; }
+    #error { color: #ff4444; margin: 20px; font-weight: bold; }
   </style>
 </head>
 <body>
-  <h1>Territory War 3</h1>
-  <div id="ruffle-player"></div>
-  <div id="error" style="display:none;">If the game doesn't load, check console (F12) for errors — SWF might be missing or path wrong.</div>
+  <h1>Territory War 3 (Ruffle Embed)</h1>
+  <div id="player-container"></div>
+  <div id="status">Loading game... (may take 10-30 seconds first time)</div>
+  <div id="error" style="display:none;">Error: Check browser console (F12) for details. Common fix: Make sure "Territory War 3.swf" exists in the root.</div>
 
   <script>
     window.RufflePlayer.config = {
-      "publicPath": "https://unpkg.com/@ruffle-rs/ruffle/",
       "autoplay": "on",
       "unmuteOverlay": "hidden",
       "letterbox": "on",
@@ -27,15 +28,17 @@
     };
 
     window.addEventListener("load", () => {
-      const container = document.getElementById("ruffle-player");
+      const container = document.getElementById("player-container");
       const ruffle = window.RufflePlayer.newest().createPlayer();
       container.appendChild(ruffle);
 
-      // Change this path if SWF is in a subfolder, e.g. "games/Territory War 3.swf"
+      // CHANGE THIS PATH IF SWF IS IN A SUBFOLDER, e.g.:
+      // ruffle.load("/games/Territory War 3.swf")
       ruffle.load("Territory War 3.swf").then(() => {
-        console.log("Game loaded successfully!");
+        document.getElementById("status").textContent = "Game loaded! Select mode to play.";
       }).catch(err => {
-        console.error("Load failed:", err);
+        console.error("Failed to load SWF:", err);
+        document.getElementById("status").style.display = "none";
         document.getElementById("error").style.display = "block";
       });
     });
